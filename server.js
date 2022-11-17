@@ -15,7 +15,7 @@ app.use(cors());
 // Route
 
 app.get('/', (req, res) => {
-  res.send('Home Page');
+  res.send('Working...');
 });
 
 app.post('/sendmail', async (req, res) => {
