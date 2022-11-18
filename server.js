@@ -28,16 +28,16 @@ app.post('/sendmail', async (req, res) => {
     const message = `<h4>Номер телефона: ${req.body.phone}</h4> <br>Откуда: ${req.body.city1} ${req.body.street1} <br>Куда: ${req.body.city2} ${req.body.street2} <br>Габариты: ${req.body.size} <br>Примерный вес: ${req.body.weight}`;
     await sendEmail(send_to, send_from, subject, message);
     res.status(200).json({ success: true, message: 'Email Sent' });
+    req.body.phone = '';
+    req.body.city1 = '';
+    req.body.city2 = '';
+    req.body.street1 = '';
+    req.body.street2 = '';
+    req.body.size = '';
+    req.body.weight = '';
   } catch (error) {
     res.status(500).json(error.message);
   }
-  req.body.phone = '';
-  req.body.city1 = '';
-  req.body.city2 = '';
-  req.body.street1 = '';
-  req.body.street2 = '';
-  req.body.size = '';
-  req.body.weight = '';
 });
 
 const PORT = process.env.PORT || 8080;
