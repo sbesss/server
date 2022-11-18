@@ -23,7 +23,7 @@ app.post('/sendmail', async (req, res) => {
 
   try {
     const send_to = `Новая заявка с сайта! Номер телефона: ${req.body.phone}`;
-    const send_from = 'somoonwork@gmail.com'; // somoontrans@yandex.ru or somoonwork@gmail.com
+    const send_from = 'somoontrans@yandex.ru'; // somoontrans@yandex.ru or somoonwork@gmail.com
     const subject = email;
     const message = `<h4>Номер телефона: ${req.body.phone}</h4> <br>Откуда: ${req.body.city1} ${req.body.street1} <br>Куда: ${req.body.city2} ${req.body.street2} <br>Габариты: ${req.body.size} <br>Примерный вес: ${req.body.weight}`;
     await sendEmail(send_to, send_from, subject, message);
@@ -31,6 +31,13 @@ app.post('/sendmail', async (req, res) => {
   } catch (error) {
     res.status(500).json(error.message);
   }
+  req.body.phone = '';
+  req.body.city1 = '';
+  req.body.city2 = '';
+  req.body.street1 = '';
+  req.body.street2 = '';
+  req.body.size = '';
+  req.body.weight = '';
 });
 
 const PORT = process.env.PORT || 8080;
