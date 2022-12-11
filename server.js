@@ -3,8 +3,17 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const sendEmail = require('./sendemail');
+const https = require('https');
+const fs = require('fs');
 
 const app = express();
+
+// for nodemailer to work
+
+const options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem'),
+};
 
 // Middleware
 
@@ -40,7 +49,11 @@ app.post('/sendmail', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT}...`);
+const PORT = process.env.PORT || 5000;
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running at ${PORT}...`);
+// });
+https.createServer(options, app).listen(process.env.PORT, function () {
+  console.log('Express started on port: ', process.env.PORT);
 });
